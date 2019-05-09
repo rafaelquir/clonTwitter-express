@@ -1,0 +1,459 @@
+swagger: '2.0'
+info:
+  description: |
+    This is a sample Petstore server.  You can find 
+    out more about Swagger at 
+    [http://swagger.io](http://swagger.io) or on 
+    [irc.freenode.net, #swagger](http://swagger.io/irc/).
+  version: 1.0.0
+  title: Twitterrq
+  termsOfService: http://swagger.io/terms/
+  contact:
+    email: apiteam@swagger.io
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+# host: petstore.swagger.io
+# basePath: /v2
+tags:
+- name: Users
+  description: social network
+  externalDocs:
+    description: Find out more
+    url: http://swagger.io
+- name: posts
+  description: Access to Petstore orders
+- name: comments
+  description: Operations about user
+  externalDocs:
+    description: Find out more about our store
+    url: http://swagger.io
+# schemes:
+# - http
+paths:
+  /users:
+    post:
+      tags:
+      - Users
+      summary: Add a user for twitter
+      operationId: addUser
+      parameters:
+      - in: body
+        name: body
+        description: Add user 
+        required: true
+        schema:
+          $ref: '#/definitions/Users'
+      responses:
+        405:
+          description: Invalid input
+    
+    get:
+      tags:
+      - Users
+      summary: Finds user
+      description: Traer a todos los usuarios
+      operationId: Encontrar el usuario
+      parameters:
+      - name: status
+        in: query
+        description: Status values that need to be considered for filter
+        required: true
+        type: array
+        items:
+          type: string
+          default: available
+        collectionFormat: multi
+      responses:
+        200:
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Users'
+        400:
+          description: Invalid status value
+      
+     
+  /users/{id}:
+    parameters:
+      - name: id
+        description: User id
+        type: string
+        in: path
+        required: true
+    get:
+      tags:
+      - Users
+      summary: Finds User by id
+      description: traer a un usuario
+      operationId: findUserById
+      produces:
+      - application/json
+      
+      responses:
+        200:
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Users'
+        400:
+          description: Invalid tag value
+      
+      
+    put:
+      tags:
+      - Users
+      summary: Update an existing user
+      operationId: updateUser
+      parameters:
+      - in: body
+        name: body
+        description: User object that needs to be added to the store
+        required: true
+        schema:
+          $ref: '#/definitions/Users'
+      responses:
+        400:
+          description: Invalid ID supplied
+        404:
+          description: User not found
+        405:
+          description: Validation exception
+   
+    delete:
+      tags:
+      - Users
+      summary: Deletes a users
+      operationId: deleteUsers
+      produces:
+      - application/json
+      parameters:
+      - name: api_key
+        in: header
+        required: false
+        type: string
+      - name: id
+        in: path
+        description: User id to delete
+        required: true
+        type: integer
+        format: int64
+      responses:
+        400:
+          description: Invalid ID supplied
+        404:
+          description: Pet not found
+
+  /posts:
+    post:
+      tags:
+      - posts
+      summary: Add a post for twitter
+      operationId: addPost
+      parameters:
+      - in: body
+        name: body
+        description: Add user 
+        required: true
+        schema:
+          $ref: '#/definitions/Users'
+      responses:
+        405:
+          description: Invalid input
+    get:
+      tags:
+      - posts
+      summary: Finds post
+      description: Traer a todos los posts
+      operationId: Encontrar los posts
+      parameters:
+      - name: status
+        in: query
+        description: Status values that need to be considered for filter
+        required: true
+        type: array
+        items:
+          type: string
+          default: available
+        collectionFormat: multi
+      responses:
+        200:
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/posts'
+        400:
+          description: Invalid status value
+  /posts/{id}:
+    parameters:
+      - name: id
+        description: User id
+        type: string
+        in: path
+        required: true
+    get:
+      tags:
+      - posts
+      summary: Finds Post by id
+      description: traer a un Post
+      operationId: findpostById
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: query
+        description: Tags to filter by
+        required: true
+        type: array
+        items:
+          type: integer
+        collectionFormat: multi
+      responses:
+        200:
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/posts'
+        400:
+          description: Invalid tag value
+    put:
+      tags:
+      - posts
+      summary: Update an existing post
+      operationId: updatePost
+      parameters:
+      - in: body
+        name: body
+        description: User object that needs to be added to the store
+        required: true
+        schema:
+          $ref: '#/definitions/posts'
+      responses:
+        400:
+          description: Invalid ID supplied
+        404:
+          description: Post not found
+        405:
+          description: Validation exception
+   
+    delete:
+      tags:
+      - posts
+      summary: Deletes a post
+      operationId: deletePost
+      produces:
+      - application/json
+      parameters:
+      - name: api_key
+        in: header
+        required: false
+        type: string
+      - name: id
+        in: path
+        description: Post id to delete
+        required: true
+        type: integer
+        format: int64
+      responses:
+        400:
+          description: Invalid ID supplied
+        404:
+          description: post not found
+  /comments:
+    post:
+      tags:
+      - comments
+      summary: Add a comment for twitter
+      operationId: addcomment
+      parameters:
+      - in: body
+        name: body
+        description: Add comment 
+        required: true
+        schema:
+          $ref: '#/definitions/comments'
+      responses:
+        405:
+          description: Invalid input
+    get:
+      tags:
+      - comments
+      summary: Finds comment
+      description: Traer a todos los comments
+      operationId: Encontrar los comments
+      parameters:
+      - name: status
+        in: query
+        description: Status values that need to be considered for filter
+        required: true
+        type: array
+        items:
+          type: string
+          default: available
+        collectionFormat: multi
+      responses:
+        200:
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/comments'
+        400:
+          description: Invalid status value
+  /comments/{id}:
+    parameters:
+      - name: id
+        description: User id
+        type: string
+        in: path
+        required: true
+    get:
+      tags:
+      - comments
+      summary: Finds comment by id
+      description: traer a un comment
+      operationId: findcommentById
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: query
+        description: Tags to filter by
+        required: true
+        type: array
+        items:
+          type: integer
+        collectionFormat: multi
+      responses:
+        200:
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/comments'
+        400:
+          description: Invalid tag value
+    put:
+      tags:
+      - comments
+      summary: Update an existing comment
+      operationId: updatecomment
+      parameters:
+      - in: body
+        name: body
+        description: User object that needs to be added to the store
+        required: true
+        schema:
+          $ref: '#/definitions/comments'
+      responses:
+        400:
+          description: Invalid ID supplied
+        404:
+          description: comment not found
+        405:
+          description: Validation exception
+   
+    delete:
+      tags:
+      - comments
+      summary: Deletes a comment
+      operationId: deletecomment
+      produces:
+      - application/json
+      parameters:
+      - name: api_key
+        in: header
+        required: false
+        type: string
+      - name: id
+        in: path
+        description: comment id to delete
+        required: true
+        type: integer
+        format: int64
+      responses:
+        400:
+          description: Invalid ID supplied
+        404:
+          description: comment not found
+definitions:
+  Users:
+    type: object
+    required:
+      - Name
+      - UserId
+      - email
+    properties:
+      id:
+        type: integer
+        format: int64
+      Name:
+        type: string
+        example: "Rafael Quiroz"
+      UserId:
+        type: string
+        example: "rafaelquiroz"
+      email:
+        type: string
+        example: "rafael_quiroz@hotmail.com"
+      password:
+        type: string
+      descripcion:
+        type: string
+      location:
+        type: string
+      webpage:
+        type: string
+      picture:
+        type: string
+   
+  posts:
+    type: object
+    properties:
+      id:
+        type: integer
+      owner_id:
+        type: integer
+      content:
+        type: string
+        example: "contenido del post"
+      post_timestamp:
+        type: number 
+      picture:
+        type: string
+
+  comments:
+    type: object
+    properties:
+      id:
+        type: integer
+      user_id:
+        type: integer
+      post_id:
+        type: integer
+      content:
+        type: string    
+ 
+  ApiResponse:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+      type:
+        type: string
+      message:
+        type: string
+externalDocs:
+  description: Find out more about Swagger
+  url: http://swagger.io
+# Added by API Auto Mocking Plugin
+host: virtserver.swaggerhub.com
+basePath: /rafaelquiroz/twitterrq/1.0.0
+schemes:
+ - https
+ - http
